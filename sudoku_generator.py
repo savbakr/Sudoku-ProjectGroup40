@@ -61,46 +61,36 @@ class SudokuGenerator:
     	return num not in self.board[row]
 	
     def valid_in_col(self, col, num):
-        pass
-
-    '''
-	Determines if num is contained in the 3x3 box specified on the board
-    If num is in the specified box starting at (row_start, col_start), return False.
-    Otherwise, return True
-
-	Parameters:
-	row_start and col_start are the starting indices of the box to check
-	i.e. the box is from (row_start, col_start) to (row_start+2, col_start+2)
-	num is the value we are looking for in the box
-
-	Return: boolean
-    '''
+	"""
+    	Returns False if num is already in the specified column, True otherwise
+    	"""
+    	for row in range(self.row_length):
+        	if self.board[row][col] == num:
+            		return False
+    	return True
+	
     def valid_in_box(self, row_start, col_start, num):
-        pass
-    
-    '''
-    Determines if it is valid to enter num at (row, col) in the board
-    This is done by checking that num is unused in the appropriate, row, column, and box
+	"""
+    	Returns False if num is in the 3x3 box starting at (row_start, col_start), True otherwise
+    	"""
+   	for i in range(3):  # box is always 3x3
+		for j in range(3):
+            		if self.board[row_start + i][col_start + j] == num:
+                		return False
+    	return True
 
-	Parameters:
-	row and col are the row index and col index of the cell to check in the board
-	num is the value to test if it is safe to enter in this cell
-
-	Return: boolean
-    '''
     def is_valid(self, row, col, num):
-        pass
+	"""
+    	Returns True if it's valid to enter num at (row, col) in the board
+    	"""
+    	# get starting coordinates of the box that contains (row, col)
+    	box_row_start = row - (row % self.box_length)
+    	box_col_start = col - (col % self.box_length)
+    
+    	return (self.valid_in_row(row, num) and 
+            self.valid_in_col(col, num) and 
+            self.valid_in_box(box_row_start, box_col_start, num))
 
-    '''
-    Fills the specified 3x3 box with values
-    For each position, generates a random digit which has not yet been used in the box
-
-	Parameters:
-	row_start and col_start are the starting indices of the box to check
-	i.e. the box is from (row_start, col_start) to (row_start+2, col_start+2)
-
-	Return: None
-    '''
     def fill_box(self, row_start, col_start):
         pass
     
